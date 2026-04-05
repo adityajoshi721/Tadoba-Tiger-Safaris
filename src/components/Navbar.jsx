@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 const LINKS = [
+  { href: "#videos", label: "Videos" },
   { href: "#gallery", label: "Gallery" },
   { href: "#packages", label: "Packages" },
   { href: "#amenities", label: "Amenities" },

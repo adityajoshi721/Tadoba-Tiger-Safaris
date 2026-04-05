@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
+import heroVideo from "../assets/VID-20250730-WA0003.mp4";
 
 const STATS = [
   { value: "Near Tadoba", label: "Easy access for early-morning safari departures" },
@@ -8,8 +9,8 @@ const STATS = [
 
 const HIGHLIGHTS = [
   {
-    title: "Machan-style calm",
-    text: "Rustic character outside, restful comfort inside, with space to slow down between jungle drives."
+    title: "Canopy mood",
+    text: "Richer textures, darker greens, and cinematic depth that feel closer to forest atmosphere."
   },
   {
     title: "Pool and open lawns",
@@ -26,24 +27,59 @@ const HIGHLIGHTS = [
 ];
 
 export default function Hero() {
+  const videoRef = useRef(null);
+  const [muted, setMuted] = useState(true);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) {
+      return;
+    }
+
+    video.muted = true;
+    const playPromise = video.play();
+    if (playPromise && typeof playPromise.catch === "function") {
+      playPromise.catch(() => {});
+    }
+  }, []);
+
+  const toggleAudio = async () => {
+    const video = videoRef.current;
+    if (!video) {
+      return;
+    }
+
+    const nextMuted = !muted;
+    video.muted = nextMuted;
+    setMuted(nextMuted);
+
+    if (!nextMuted) {
+      try {
+        await video.play();
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
+
   return (
     <section className="hero">
       <div className="container">
         <div className="hero-grid">
           <div className="hero__content">
             <p className="hero__kicker">Tadoba Gateway Stay</p>
-            <h1 className="hero__title">Wild mornings. Warm hospitality. A stay that feels cinematic.</h1>
+            <h1 className="hero__title">Jungle mood, moving visuals, and a stay that feels far from ordinary.</h1>
             <p className="hero__lede">
-              Gondwana Jungle Resort blends the thrill of Tadoba safaris with calm, earthy comfort. Come for
-              the tiger country, stay for the slower rhythm of poolside afternoons, fresh meals, and starlit nights.
+              Gondwana Jungle Resort blends the thrill of Tadoba safaris with a deeper, more immersive forest feel.
+              Come for the tiger country, stay for the cinematic greenery, poolside calm, and nights that feel wrapped in canopy.
             </p>
 
             <div className="hero__actions">
-              <a className="btn btn--primary" href="#packages">
-                Explore Packages
+              <a className="btn btn--primary" href="#videos">
+                Watch the Resort
               </a>
-              <a className="btn btn--secondary" href="#gallery">
-                Browse the Resort
+              <a className="btn btn--secondary" href="#packages">
+                Explore Packages
               </a>
             </div>
 
@@ -57,15 +93,29 @@ export default function Hero() {
             </div>
           </div>
 
-          <div className="hero__media" aria-label="View of Gondwana Jungle Resort surrounded by greenery">
-            <div className="hero__image" role="img" aria-hidden="true" />
+          <div className="hero__media" aria-label="Video view of Gondwana Jungle Resort surrounded by greenery">
+            <video
+              ref={videoRef}
+              className="hero__video"
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="metadata"
+            >
+              <source src={heroVideo} type="video/mp4" />
+            </video>
+            <div className="hero__shade" aria-hidden="true" />
             <div className="hero__frame" aria-hidden="true" />
             <div className="hero__floating-card">
-              <p className="hero__floating-title">Designed for Tadoba days</p>
+              <p className="hero__floating-title">Jungle video with sound</p>
               <p className="hero__floating-copy">
-                Early safari starts, quiet mid-days, and evenings that feel tucked away from everything noisy.
+                Use the button below to unmute after the page loads. Browsers block autoplay with audio until the visitor interacts.
               </p>
-              <p className="hero__floating-meta">Best for couples, families, wildlife enthusiasts, and small groups.</p>
+              <button type="button" className="btn btn--audio" onClick={toggleAudio}>
+                {muted ? "Play with Sound" : "Mute Video"}
+              </button>
+              <p className="hero__floating-meta">The video loops in the hero, and more clips with full controls are just below.</p>
             </div>
           </div>
         </div>

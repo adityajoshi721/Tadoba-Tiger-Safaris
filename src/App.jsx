@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "./components/Navbar.jsx";
 import Hero from "./components/Hero.jsx";
+import Videos from "./components/Videos.jsx";
 import Rooms from "./components/Rooms.jsx";
 import Gallery from "./components/Gallery.jsx";
 import Amenities from "./components/Amenities.jsx";
@@ -16,6 +17,23 @@ export default function App() {
       <Navbar />
       <main>
         <Hero />
+
+        <section id="videos" className="section section--tight">
+          <div className="container">
+            <div className="section__head">
+              <div>
+                <p className="section__eyebrow">Moving Through Gondwana</p>
+                <h2 className="section__title">Real resort videos, right on the homepage, with sound controls built in.</h2>
+                <p className="section__desc">
+                  Every clip can be played with audio from its controls. The hero video starts muted first because
+                  browsers block autoplay with sound until the visitor interacts.
+                </p>
+              </div>
+              <span className="section__rule" aria-hidden="true" />
+            </div>
+            <Videos />
+          </div>
+        </section>
 
         <section id="gallery" className="section section--tight">
           <div className="container">

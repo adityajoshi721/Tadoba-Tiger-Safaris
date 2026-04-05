@@ -18,15 +18,15 @@ export default function App() {
       <main>
         <Hero />
 
-        <section id="videos" className="section section--tight">
+        <section id="videos" className="section section--dark section--tight">
           <div className="container">
             <div className="section__head">
               <div>
                 <p className="section__eyebrow">Moving Through Gondwana</p>
-                <h2 className="section__title">Real resort videos, right on the homepage, with sound controls built in.</h2>
+                <h2 className="section__title">Resort videos with a clearer layout, stronger hierarchy, and better visibility.</h2>
                 <p className="section__desc">
-                  Every clip can be played with audio from its controls. The hero video starts muted first because
-                  browsers block autoplay with sound until the visitor interacts.
+                  The featured clip now leads the section, with supporting reels arranged below. Audio is available
+                  directly from the player controls.
                 </p>
               </div>
               <span className="section__rule" aria-hidden="true" />

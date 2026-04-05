@@ -4,9 +4,8 @@ const LINKS = [
   { href: "#videos", label: "Videos" },
   { href: "#gallery", label: "Gallery" },
   { href: "#packages", label: "Packages" },
-  { href: "#amenities", label: "Amenities" },
   { href: "#about", label: "About" },
-  { href: "#reviews", label: "Reviews" }
+  { href: "#contact", label: "Contact" }
 ];
 
 export default function Navbar() {
@@ -27,26 +26,18 @@ export default function Navbar() {
       }
     };
 
-    if (mq.addEventListener) {
-      mq.addEventListener("change", handleChange);
-    } else {
-      mq.addListener(handleChange);
-    }
+    if (mq.addEventListener) mq.addEventListener("change", handleChange);
+    else mq.addListener(handleChange);
 
     return () => {
-      if (mq.removeEventListener) {
-        mq.removeEventListener("change", handleChange);
-      } else {
-        mq.removeListener(handleChange);
-      }
+      if (mq.removeEventListener) mq.removeEventListener("change", handleChange);
+      else mq.removeListener(handleChange);
     };
   }, []);
 
   useEffect(() => {
     const onKeyDown = (event) => {
-      if (event.key === "Escape") {
-        setOpen(false);
-      }
+      if (event.key === "Escape") setOpen(false);
     };
 
     window.addEventListener("keydown", onKeyDown);
@@ -75,9 +66,8 @@ export default function Navbar() {
         </div>
 
         <div className="nav__actions">
-          <span className="nav__meta">Open for family stays, safari escapes, and group bookings</span>
           <a href="#contact" className="cta">
-            Enquire Now
+            Enquire
           </a>
           <button
             className="nav__toggle"
@@ -120,7 +110,7 @@ export default function Navbar() {
               </a>
             ))}
             <a href="#contact" className="cta" onClick={closeMenu}>
-              Enquire Now
+              Enquire
             </a>
           </div>
         </div>

@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import emailjs from "@emailjs/browser";
 
-export default function Contact(){
+export default function Contact() {
   const [status, setStatus] = useState(null);
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    const form = e.currentTarget;
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    const form = event.currentTarget;
 
-    // Replace with your EmailJS values
     const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID || "your_service_id";
     const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || "your_template_id";
     const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || "your_public_key";
@@ -16,32 +15,86 @@ export default function Contact(){
     try {
       await emailjs.sendForm(serviceId, templateId, form, { publicKey });
       form.reset();
-      setStatus("Thanks! We’ll get back shortly.");
-    } catch (err) {
-      console.error(err);
-      setStatus("Could not send. Please try WhatsApp.");
+      setStatus("Thanks. Your enquiry has been sent and the team should get back to you shortly.");
+    } catch (error) {
+      console.error(error);
+      setStatus("The form could not send right now. Please use WhatsApp and we will help from there.");
     }
   };
 
   return (
-    <form className="panel" onSubmit={onSubmit}>
-      <div style={{display:"grid", gridTemplateColumns:"1fr 1fr", gap:12}}>
-        <input required name="name" placeholder="Your Name" style={inputStyle} />
-        <input required name="phone" placeholder="Phone / WhatsApp" style={inputStyle} />
-      </div>
-      <input required name="email" type="email" placeholder="Email" style={{...inputStyle, marginTop:12}} />
-      <textarea required name="message" rows={5} placeholder="Tell us your dates, number of guests, and any requests" style={{...inputStyle, marginTop:12, resize:"vertical"}} />
-      <div style={{display:"flex", gap:12, marginTop:12}}>
-        <button className="cta" type="submit">Send Enquiry</button>
-        <a className="cta" href="https://wa.me/919999999999" target="_blank" rel="noreferrer" style={{background:"linear-gradient(135deg, var(--accent-2), #2b8a3e)"}}>WhatsApp</a>
-      </div>
-      {status && <p style={{marginTop:10, color:"var(--muted)"}}>{status}</p>}
-    </form>
+    <div className="contact-layout">
+      <form className="contact-layout__form" onSubmit={onSubmit}>
+        <p className="kicker">Send an enquiry</p>
+        <h3 className="card__title">Share your travel window and we’ll help shape the stay.</h3>
+        <p className="card__text">
+          Include preferred dates, guest count, safari interest, and whether you need transfers or a custom group arrangement.
+        </p>
+
+        <div className="form-grid">
+          <label className="field">
+            <span className="field__label">Full name</span>
+            <input className="input" required name="name" placeholder="Your name" />
+          </label>
+          <label className="field">
+            <span className="field__label">Phone or WhatsApp</span>
+            <input className="input" required name="phone" placeholder="+91" />
+          </label>
+        </div>
+
+        <label className="field" style={{ marginTop: 12 }}>
+          <span className="field__label">Email</span>
+          <input className="input" required name="email" type="email" placeholder="your@email.com" />
+        </label>
+
+        <label className="field" style={{ marginTop: 12 }}>
+          <span className="field__label">Trip details</span>
+          <textarea
+            className="input"
+            required
+            name="message"
+            placeholder="Dates, number of guests, safari plans, room preference, and anything else we should know"
+          />
+        </label>
+
+        <div className="contact-layout__actions">
+          <button className="btn btn--primary" type="submit">
+            Send Enquiry
+          </button>
+          <a className="btn btn--secondary" href="https://wa.me/919921150541" target="_blank" rel="noreferrer">
+            Chat on WhatsApp
+          </a>
+        </div>
+
+        {status ? <p className="status-copy">{status}</p> : null}
+      </form>
+
+      <aside className="contact-layout__aside">
+        <div className="contact-card">
+          <div className="contact-card__item">
+            <h4>Call</h4>
+            <a href="tel:+919921150541">+91 99211 50541</a>
+          </div>
+
+          <div className="contact-card__item">
+            <h4>Email</h4>
+            <a href="mailto:gondwana357@gmail.com">gondwana357@gmail.com</a>
+          </div>
+
+          <div className="contact-card__item">
+            <h4>Best for</h4>
+            <p>Safari planning, room availability, family stays, and custom group packages.</p>
+          </div>
+
+          <div className="contact-card__note">
+            <h4>Helpful tip</h4>
+            <p>
+              If you already know your travel dates, share them in the first message. That makes availability
+              checks and package suggestions much faster.
+            </p>
+          </div>
+        </div>
+      </aside>
+    </div>
   );
 }
-
-const inputStyle = {
-  width:"100%", padding:"12px 14px", borderRadius:"12px",
-  border:"1px solid var(--border)", background:"rgba(255,255,255,0.03)",
-  color:"var(--text)", outline:"none"
-};

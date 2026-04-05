@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Navbar from "./components/Navbar.jsx";
 import Hero from "./components/Hero.jsx";
 import Rooms from "./components/Rooms.jsx";
@@ -8,61 +8,99 @@ import About from "./components/About.jsx";
 import Reviews from "./components/Reviews.jsx";
 import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
-import './jungle-theme.css';
-export default function App(){
-  const [section, setSection] = useState("home");
+import "./jungle-theme.css";
+
+export default function App() {
   return (
-    <>
-      <Navbar onNavigate={setSection} />
+    <div className="app-shell">
+      <Navbar />
       <main>
         <Hero />
-        <div id="gallery" className="section container">
-          <div className="section__head">
-            <h2 className="section__title">Gallery</h2>
-            <p className="section__desc">A glimpse of dew-lit mornings, golden hours, and starry nights at Gondwana.</p>
-          </div>
-          <Gallery />
 
-          
-        </div>
+        <section id="gallery" className="section section--tight">
+          <div className="container">
+            <div className="section__head">
+              <div>
+                <p className="section__eyebrow">Visual Diary</p>
+                <h2 className="section__title">A resort shaped by forest light, water, and quiet luxury.</h2>
+                <p className="section__desc">
+                  Sunlit decks, still pools, cosy cottages, and open skies. The gallery leans into the
+                  atmosphere guests actually remember after a Tadoba stay.
+                </p>
+              </div>
+              <span className="section__rule" aria-hidden="true" />
+            </div>
+            <Gallery />
+          </div>
+        </section>
+
+        <section id="packages" className="section">
+          <div className="container">
+            <div className="section__head">
+              <div>
+                <p className="section__eyebrow">Stay Plans</p>
+                <h2 className="section__title">Safari packages built for families, first-timers, and group escapes.</h2>
+                <p className="section__desc">
+                  Each plan is arranged to keep the logistics easy, the pace relaxed, and the safari time front and center.
+                </p>
+              </div>
+              <span className="section__rule" aria-hidden="true" />
+            </div>
+            <Rooms />
+          </div>
+        </section>
+
+        <section id="amenities" className="section">
+          <div className="container">
+            <div className="section__head">
+              <div>
+                <p className="section__eyebrow">Resort Life</p>
+                <h2 className="section__title">The comfort layer around every safari morning and slow evening.</h2>
+                <p className="section__desc">
+                  Thoughtful hospitality, generous spaces, and a setting that lets the wild stay close without feeling rough.
+                </p>
+              </div>
+              <span className="section__rule" aria-hidden="true" />
+            </div>
+            <Amenities />
+          </div>
+        </section>
+
+        <section id="about" className="section">
+          <div className="container">
+            <div className="section__head">
+              <div>
+                <p className="section__eyebrow">About Gondwana</p>
+                <h2 className="section__title">A family-run forest retreat designed to feel grounded, warm, and unhurried.</h2>
+                <p className="section__desc">
+                  Gondwana is built for travellers who want the thrill of Tadoba with a stay that still feels personal.
+                </p>
+              </div>
+              <span className="section__rule" aria-hidden="true" />
+            </div>
+            <About />
+          </div>
+        </section>
+
         <Reviews />
 
-        <div id="rooms" className="section container">
-          <div className="section__head">
-            <h2 className="section__title">Tours and Packages</h2>
-            <p className="section__desc">Curated stays that blend jungle calm with modern comfort. Simple pricing, flexible plans.</p>
+        <section id="contact" className="section">
+          <div className="container">
+            <div className="section__head">
+              <div>
+                <p className="section__eyebrow">Plan Your Stay</p>
+                <h2 className="section__title">Tell us your dates and group size, and we’ll shape the right Tadoba getaway.</h2>
+                <p className="section__desc">
+                  Reach out for room availability, safari support, transfers, or group itineraries. The form and WhatsApp both work.
+                </p>
+              </div>
+              <span className="section__rule" aria-hidden="true" />
+            </div>
+            <Contact />
           </div>
-          <Rooms />
-        </div>
-
-        <div id="amenities" className="section container">
-          <div className="section__head">
-            <h2 className="section__title">Amenities</h2>
-            <p className="section__desc">From a forest-view pool to farm-to-table dining, we make the wild feel wonderfully welcoming.</p>
-          </div>
-          <Amenities />
-        </div>
-
-        
-
-        <div id="about" className="section container">
-          <div className="section__head">
-            <h2 className="section__title">About Us</h2>
-            <p className="section__desc">Nestled near Tadoba, we are a family-run resort created by people who love the forest.</p>
-          </div>
-          <About />
-        </div>
-
-        <div id="contact" className="section container">
-          <div className="section__head">
-            <h2 className="section__title">Enquiry</h2>
-            <p className="section__desc">Ping us for dates, packages, or custom group bookings. We usually reply within a few hours.</p>
-          </div>
-          <Contact />
-        </div>
-
+        </section>
       </main>
       <Footer />
-    </>
+    </div>
   );
 }

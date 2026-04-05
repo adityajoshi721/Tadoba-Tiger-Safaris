@@ -1,27 +1,48 @@
 import React from "react";
 
 const REVIEWS = [
-  { name: "Aarav", text: "Beautiful property and very helpful staff. Loved the pool and morning walks.", score: 4.8 },
-  { name: "Meera", text: "Perfect for families. Great food and peaceful cottages.", score: 4.7 },
-  { name: "Rohit", text: "They helped us plan our safari and it was amazing!", score: 4.9 }
+  {
+    name: "Aarav S.",
+    score: 4.8,
+    meta: "Family stay",
+    text: "Beautiful property, very supportive staff, and the whole schedule around the safari felt smooth from start to finish."
+  },
+  {
+    name: "Meera P.",
+    score: 4.7,
+    meta: "Weekend escape",
+    text: "The resort feels peaceful without being dull. The food was excellent and the pool area became our evening ritual."
+  },
+  {
+    name: "Rohit K.",
+    score: 4.9,
+    meta: "Safari-first trip",
+    text: "They helped us plan everything properly. That made the trip feel easy, which is exactly what you want in a wildlife getaway."
+  }
 ];
 
-export default function Reviews(){
+export default function Reviews() {
   return (
-    <section className="section" style={{background:"linear-gradient(180deg, rgba(20,47,34,0.45), rgba(20,47,34,0.2))", borderTop:"1px solid var(--border)"}}>
+    <section id="reviews" className="section section--accent">
       <div className="container">
         <div className="section__head">
-          <h2 className="section__title">Guest Reviews</h2>
-          <p className="section__desc">Straight from the logbook — what guests loved about their stay.</p>
+          <div>
+            <p className="section__eyebrow">Guest Notes</p>
+            <h2 className="section__title">What people remember most is the feeling after the safari, not just the checklist.</h2>
+            <p className="section__desc">
+              The most repeated feedback is simple: the stay makes the adventure easier and the downtime better.
+            </p>
+          </div>
+          <span className="section__rule" aria-hidden="true" />
         </div>
-        <div className="grid-3">
-          {REVIEWS.map((r, i) => (
-            <article key={i} className="card">
-              <div className="card__body">
-                <div className="kicker">Rating: {r.score.toFixed(1)}/5</div>
-                <h3 className="card__title">{r.name}</h3>
-                <p className="card__text">“{r.text}”</p>
-              </div>
+
+        <div className="review-grid">
+          {REVIEWS.map((review) => (
+            <article key={review.name} className="review-card">
+              <div className="review-card__score">{review.score.toFixed(1)} / 5 guest rating</div>
+              <p className="review-card__quote">"{review.text}"</p>
+              <h3 className="review-card__name">{review.name}</h3>
+              <p className="review-card__meta">{review.meta}</p>
             </article>
           ))}
         </div>

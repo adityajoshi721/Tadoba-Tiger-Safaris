@@ -2,16 +2,51 @@ import React, { useState } from "react";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 
-// ✅ Import local images (replace with your actual files)
-import img1 from "../assets/heroImage.jpeg";
-import img2 from "../assets/guest1.jpg";
-import img3 from "../assets/Room2.jpg";
-import img4 from "../assets/building2.jpg";
-import img5 from "../assets/topView.jpg";
-import img6 from "../assets/pool1.jpg";
+import heroImage from "../assets/heroImage.jpeg";
+import guestImage from "../assets/guest1.jpg";
+import roomImage from "../assets/Room2.jpg";
+import buildingImage from "../assets/building2.jpg";
+import topViewImage from "../assets/topView.jpg";
+import poolImage from "../assets/pool1.jpg";
 
-// Build the array with imported images
-const IMGS = [img1, img2, img3, img4, img5, img6];
+const IMAGES = [
+  {
+    src: heroImage,
+    title: "Forest-framed arrival",
+    copy: "The first impression is all texture, light, and a strong sense of being somewhere far slower.",
+    className: "gallery-card gallery-card--wide"
+  },
+  {
+    src: topViewImage,
+    title: "Aerial calm",
+    copy: "Open grounds, layered greenery, and the kind of layout that makes group stays feel easy.",
+    className: "gallery-card gallery-card--stack"
+  },
+  {
+    src: poolImage,
+    title: "Poolside reset",
+    copy: "A quiet pause between safari drives and evening meals.",
+    className: "gallery-card gallery-card--standard"
+  },
+  {
+    src: guestImage,
+    title: "Shared moments",
+    copy: "Relaxed hospitality for families, couples, and wildlife-loving friend groups.",
+    className: "gallery-card gallery-card--standard"
+  },
+  {
+    src: roomImage,
+    title: "Restful interiors",
+    copy: "Comfort-first spaces that keep the stay warm and unfussy.",
+    className: "gallery-card gallery-card--standard"
+  },
+  {
+    src: buildingImage,
+    title: "Earthy architecture",
+    copy: "Built to feel rooted in the landscape instead of separated from it.",
+    className: "gallery-card gallery-card--standard"
+  }
+];
 
 export default function Gallery() {
   const [open, setOpen] = useState(false);
@@ -19,27 +54,23 @@ export default function Gallery() {
 
   return (
     <>
-      <div className="grid-3">
-        {IMGS.map((src, i) => (
-          <div
-            key={i}
-            className="card"
+      <div className="gallery-grid">
+        {IMAGES.map((image, imageIndex) => (
+          <article
+            key={image.title}
+            className={image.className}
             onClick={() => {
-              setIndex(i);
+              setIndex(imageIndex);
               setOpen(true);
             }}
-            style={{ cursor: "zoom-in" }}
           >
-            <div
-              className="card__media"
-              style={{ background: `url(${src}) center/cover no-repeat` }}
-            />
-            <div className="card__body">
-              <div className="kicker">Gallery</div>
-              <div className="card__title">Moment #{i + 1}</div>
-              <div className="card__text">Tap to open</div>
+            <div className="gallery-card__image" style={{ backgroundImage: `url(${image.src})` }} />
+            <div className="gallery-card__overlay">
+              <p className="gallery-card__eyebrow">Tap to expand</p>
+              <h3 className="gallery-card__title">{image.title}</h3>
+              <p className="gallery-card__copy">{image.copy}</p>
             </div>
-          </div>
+          </article>
         ))}
       </div>
 
@@ -47,7 +78,7 @@ export default function Gallery() {
         open={open}
         close={() => setOpen(false)}
         index={index}
-        slides={IMGS.map((src) => ({ src }))}
+        slides={IMAGES.map((image) => ({ src: image.src }))}
       />
     </>
   );

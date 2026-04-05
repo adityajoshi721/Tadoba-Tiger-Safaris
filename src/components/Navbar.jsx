@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from "react";
 
+const LINKS = [
+  { href: "#gallery", label: "Gallery" },
+  { href: "#packages", label: "Packages" },
+  { href: "#amenities", label: "Amenities" },
+  { href: "#about", label: "About" },
+  { href: "#reviews", label: "Reviews" }
+];
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
 
-  // Lock/unlock body scroll when mobile menu is open
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     return () => {
@@ -12,112 +18,108 @@ export default function Navbar() {
     };
   }, [open]);
 
-  // Close menu if window is resized to desktop
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 901px)");
-    const handle = (e) => {
-      if (e.matches) setOpen(false);
+    const handleChange = (event) => {
+      if (event.matches) {
+        setOpen(false);
+      }
     };
-    if (mq.addEventListener) mq.addEventListener("change", handle);
-    else mq.addListener(handle); // Safari fallback
+
+    if (mq.addEventListener) {
+      mq.addEventListener("change", handleChange);
+    } else {
+      mq.addListener(handleChange);
+    }
+
     return () => {
-      if (mq.removeEventListener) mq.removeEventListener("change", handle);
-      else mq.removeListener(handle);
+      if (mq.removeEventListener) {
+        mq.removeEventListener("change", handleChange);
+      } else {
+        mq.removeListener(handleChange);
+      }
     };
   }, []);
 
-  // Close with Escape
   useEffect(() => {
-    const onKey = (e) => {
-      if (e.key === "Escape") setOpen(false);
+    const onKeyDown = (event) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+      }
     };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
   }, []);
 
   const closeMenu = () => setOpen(false);
 
   return (
     <nav className="nav">
-      <div className="container inner">
-        {/* Brand */}
+      <div className="inner">
         <a href="#" className="brand" onClick={closeMenu}>
-          <span className="brand__logo">TS</span>
-          <span className="brand__text">Tadoba Tiger Safaris</span>
+          <span className="brand__logo">GJ</span>
+          <span className="brand__group">
+            <span className="brand__text">Gondwana Jungle Resort</span>
+            <span className="brand__subtext">Near Tadoba National Park</span>
+          </span>
         </a>
 
-        {/* Desktop links */}
-        <div className="nav__links" aria-label="Primary">
-          <a href="#rooms">Rooms</a>
-          <a href="#amenities">Amenities</a>
-          <a href="#gallery">Gallery</a>
-          <a href="#about">About</a>
-          <a href="#wildlife">Wildlife</a>
-          <a href="#video">Video</a>
-          <a href="#contact" className="cta">
-            Enquire
-          </a>
+        <div className="nav__links" aria-label="Primary navigation">
+          {LINKS.map((link) => (
+            <a key={link.href} href={link.href}>
+              {link.label}
+            </a>
+          ))}
         </div>
 
-        {/* Mobile toggle */}
-        <button
-          className="nav__toggle"
-          aria-expanded={open ? "true" : "false"}
-          aria-controls="mobile-menu"
-          aria-label={open ? "Close menu" : "Open menu"}
-          onClick={() => setOpen((v) => !v)}
-        >
-          <span className="nav__bar" />
-          <span className="nav__bar" />
-          <span className="nav__bar" />
-        </button>
+        <div className="nav__actions">
+          <span className="nav__meta">Open for family stays, safari escapes, and group bookings</span>
+          <a href="#contact" className="cta">
+            Enquire Now
+          </a>
+          <button
+            className="nav__toggle"
+            type="button"
+            aria-expanded={open ? "true" : "false"}
+            aria-controls="mobile-menu"
+            aria-label={open ? "Close menu" : "Open menu"}
+            onClick={() => setOpen((value) => !value)}
+          >
+            <span className="nav__bar" />
+            <span className="nav__bar" />
+            <span className="nav__bar" />
+          </button>
+        </div>
       </div>
 
-      {/* Mobile overlay */}
       <div
         id="mobile-menu"
         className={`mobile-menu ${open ? "is-open" : ""}`}
         onClick={closeMenu}
         aria-hidden={open ? "false" : "true"}
-        role="dialog"
-        aria-modal="true"
       >
-        <div
-          className="mobile-menu__panel"
-          onClick={(e) => e.stopPropagation()}
-        >
+        <div className="mobile-menu__panel" onClick={(event) => event.stopPropagation()}>
           <div className="mobile-menu__head">
-            <span className="brand__logo">TS</span>
-            <span className="brand__text">Tadoba Tiger Safaris</span>
-            <button
-              className="nav__toggle nav__toggle--close"
-              aria-label="Close menu"
-              onClick={closeMenu}
-            >
-              ✕
+            <span className="brand__group">
+              <span className="brand__text">Gondwana Jungle Resort</span>
+              <span className="brand__subtext">Forest stays and Tadoba safari support</span>
+            </span>
+            <button className="nav__toggle nav__toggle--close" type="button" onClick={closeMenu}>
+              <span className="nav__bar" />
+              <span className="nav__bar" />
+              <span className="nav__bar" />
             </button>
           </div>
+
           <div className="mobile-menu__links">
-            <a href="#rooms" onClick={closeMenu}>
-              Rooms
-            </a>
-            <a href="#amenities" onClick={closeMenu}>
-              Amenities
-            </a>
-            <a href="#gallery" onClick={closeMenu}>
-              Gallery
-            </a>
-            <a href="#about" onClick={closeMenu}>
-              About
-            </a>
-            <a href="#wildlife" onClick={closeMenu}>
-              Wildlife
-            </a>
-            <a href="#video" onClick={closeMenu}>
-              Video
-            </a>
+            {LINKS.map((link) => (
+              <a key={link.href} href={link.href} onClick={closeMenu}>
+                {link.label}
+              </a>
+            ))}
             <a href="#contact" className="cta" onClick={closeMenu}>
-              Enquire
+              Enquire Now
             </a>
           </div>
         </div>
